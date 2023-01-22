@@ -17,7 +17,8 @@ func getStockPrice(symbol string, date time.Time) (float64, error) {
 		ApiSecret: apiSecret,
 	})
 
-	trades, err := dataClient.GetTrades(symbol, marketdata.GetTradesParams{
+	bars, err := dataClient.GetBars(symbol, marketdata.GetBarsParams{
+		Adjustment: marketdata.Split,
 		Start:      date,
 		TotalLimit: 5,
 		PageLimit:  5,
@@ -26,9 +27,9 @@ func getStockPrice(symbol string, date time.Time) (float64, error) {
 		return -1, err
 	}
 
-	if len(trades) == 0 {
-		return -1, fmt.Errorf("Could not find the symbol")
+	if len(bars) == 0 {
+		return -1, fmt.Errorf("could not find the symbol")
 	}
-	return trades[0].Price, nil
+	return bars[0].Close, nil
 
 }
