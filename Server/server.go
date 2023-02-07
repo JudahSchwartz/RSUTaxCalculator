@@ -24,15 +24,16 @@ func (do *DateOnly) UnmarshalJSON(data []byte) error {
 }
 
 // example request
-// {
-//  "StockSymbol" : "PANW",
-// 	"GrantDate" : "01/01/2021",
-// 	"SellingDate": "01/01/2023",
-// 	"SellingAmount" : 10,
-// 	"MonthlySalary" : 10000,
-// 	"AdditionalIncome" : 50000,
-// 	"TaxMethod" : "Fixed"
-// }
+//
+//	{
+//	 "StockSymbol" : "PANW",
+//		"GrantDate" : "2021/01/01",
+//		"SellingDate": "2023/01/01",
+//		"SellingAmount" : 10,
+//		"MonthlySalary" : 10000,
+//		"AdditionalIncome" : 50000,
+//		"TaxMethod" : "Fixed"
+//	}
 type TaxMethod string
 
 const (
