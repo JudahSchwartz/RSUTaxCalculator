@@ -8,6 +8,31 @@ import (
 	"time"
 )
 
+type DateOnly struct {
+	time.Time
+}
+
+func (do *DateOnly) UnmarshalJSON(data []byte) error {
+	// Ignore null, like in the main JSON package.
+	if string(data) == "null" {
+		return nil
+	}
+	// Fractional seconds are handled implicitly by Parse.
+	var err error
+	do.Time, err = time.Parse("\"2006/01/02\"", string(data))
+	return err
+}
+
+// example request
+// {
+//  "StockSymbol" : "PANW",
+// 	"GrantDate" : "01/01/2021",
+// 	"SellingDate": "01/01/2023",
+// 	"SellingAmount" : 10,
+// 	"MonthlySalary" : 10000,
+// 	"AdditionalIncome" : 50000,
+// 	"TaxMethod" : "Fixed"
+// }
 type TaxMethod string
 
 const (
@@ -15,17 +40,30 @@ const (
 	Progressive TaxMethod = "Progressive"
 )
 
+type TaxDeduction struct {
+	EffectiveRate float32
+	TaxedAmount   float32
+	Amount        float32
+	Reason        string
+}
+
+type TaxCalculationRespone struct {
+	GrossAmount   int
+	NetAmount     int
+	TaxDeductions []TaxDeduction
+}
+
 type TaxCalculationRequest struct {
 	StockSymbol      string
-	GrantDate        time.Time
-	SellingDate      time.Time
+	GrantDate        DateOnly
+	SellingDate      DateOnly
 	SellingAmount    int
 	MonthlySalary    int
 	AdditionalIncome int
 	TaxMethod        TaxMethod
 }
 
-func calculateTax(r *TaxCalculationRequest) map[string]interface{} {
+func calculateTaxMock(r *TaxCalculationRequest) map[string]interface{} {
 	data := map[string]interface{}{
 		"gross_amount": 10000,
 		"net_amount":   2000,
@@ -60,7 +98,7 @@ func main() {
 		print(err)
 		data := calculateTax(&req)
 		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusCreated)
+		w.WriteHeader(http.StatusOK)
 		json.NewEncoder(w).Encode(data)
 	})
 
