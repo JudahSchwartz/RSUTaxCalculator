@@ -9,7 +9,6 @@ class TextBox extends Component {
 
     getTextBoxValue = (event) => {
         this.state.textBoxValue = event.target.value
-        console.log(this.state.textBoxValue)
     }
 
     render() {
