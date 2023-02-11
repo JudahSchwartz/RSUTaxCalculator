@@ -7,7 +7,7 @@ class Dates extends Component {
     state = {
         textBoxes: [
             { "id": 1, date: "", headerValue: "Please enter your grant date"},
-            { "id": 1, date: "", headerValue: "Please enter your desired selling date"},
+            { "id": 2, date: "", headerValue: "Please enter your desired selling date"},
         ]
     }
 
