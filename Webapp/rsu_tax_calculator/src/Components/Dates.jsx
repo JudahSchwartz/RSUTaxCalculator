@@ -14,7 +14,7 @@ class Dates extends Component {
     onChangeDate = (event, date) => {
         // copy the original dates
         const dates = [...this.state.dates]
-        // find the index of the text box that needs to be changed
+        // find the index of the date that needs to be changed
         const index = dates.indexOf(date)
         dates[index].date = event.target.value
         // set the new state
