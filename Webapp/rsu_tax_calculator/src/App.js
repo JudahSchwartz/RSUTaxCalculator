@@ -1,11 +1,16 @@
 import React from 'react';
-import HelloWorld from './HelloWorld';
+import TextBoxes from './Components/TextBoxes';
+import TextMethod from './Components/TaxMethod'
+import Dates from './Components/Dates';
+
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <HelloWorld />
+      <Dates />
+      <TextBoxes />
+      <TextMethod />
     </div>
   );
 }
