@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-
+import Dropdown from 'react-bootstrap/Dropdown';
 
 class TaxMethod extends Component {
     
@@ -8,19 +8,23 @@ class TaxMethod extends Component {
     }
     
 
-    handleChange = (event) => {
-        this.setState({chosenOption: event.target.value})
+    handleChange = (val) => {
+        this.setState({chosenOption: val})
     }
 
     render() {
         return (
             <div>
-                <h3>Tax Method</h3>
-                <select onChange={this.handleChange}>
-                    <option value="Fixed">Fixed</option>
-                    <option value="Progressive">Progressive</option>
-                </select>
-                
+                <Dropdown onSelect={this.handleChange}>
+      <Dropdown.Toggle variant="success" id="dropdown-basic">
+      {this.state.chosenOption || 'Tax Method'}
+      </Dropdown.Toggle>
+
+      <Dropdown.Menu>
+        <Dropdown.Item eventKey="Fixed">Fixed</Dropdown.Item>
+        <Dropdown.Item eventKey="Progessive">Progessive</Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
             </div>
         )
     }
